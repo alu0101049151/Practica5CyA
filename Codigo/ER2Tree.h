@@ -37,6 +37,8 @@ class ER2Tree {
 	public:
 		ER2Tree (std::string& ficheroEntrada, std::string& ficheroSalida, std::string& ficheroAlfabeto);
 		~ER2Tree ();
+
+    std::string introduceConcatenacion (ExpresionRegular expresion);
 	
 	protected:
 		// Método que lee el fichero de entrada, aplica los algoritmos 1 y 2 a las
@@ -47,20 +49,20 @@ class ER2Tree {
 
 		// Método para modificar la Expresion Regular leída del fichero en notación
 		// infija. Añade los símbolos & que en la notación infija están implícitos.
-		std::string introduceConcatenacion (ExpresionRegular expresion);
+		//std::string introduceConcatenacion (ExpresionRegular expresion);
 
 
     // Convierte la expresión regular de notación infija a postfija.
-		void algoritmo1 (ExpresionRegular& expresionRegular);
+		void algoritmo1 (ExpresionRegular& expresionRegular, std::string& auxInfija);
 
 
     // Obtiene el árbol de una expresión regular en notación postfija.
-		void algoritmo2 (ExpresionRegular& expresionRegular);
+		void algoritmo2 (ExpresionRegular& expresion);
 
 
 		// Escribe en el fichero de salida la tabla solicitada en el enunciado de la
 		// práctica.
-		void escrituraFichero (std::ficheroSalida);	
+		void escrituraFichero (std::string& ficheroSalida);	
 	
 	private:
     // Es el alfabeto que contiene los símbolos posibles de todas las expresiones

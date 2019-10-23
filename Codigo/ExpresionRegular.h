@@ -25,7 +25,12 @@
 #include <string>
 
 const char NEWLINE = '\n';
-const std::string CONCATENACION = '&';
+const std::string CONCATENACION = "&";
+const char CONCATENA = '&';
+const char PABIERTO = '(';
+const char PCERRADO = ')';
+const char STAR = '*';
+const char OR = '|';
 
 class ExpresionRegular {
 	public:
@@ -40,7 +45,7 @@ class ExpresionRegular {
 		void setInfija (std::string newInfija);
 		void setPostfija (std::string newPostfija);
 		void setPefija (std::string newPrefija);
-		void insertInfija (int i);
+	//	void insertarInfija (int i);
 
 	protected:
 

@@ -1,0 +1,4 @@
+(a|b)(c|d)
+(a|b)*xz*
+a|bc
+a|b

@@ -43,7 +43,10 @@ void Alfabeto::lee (std::string& ficheroEntrada) {
 
 		while (!entrada.eof()){
 			entrada.get(leido);
-			alfabeto_.insert(leido);
+			if (leido != NEWLINE){
+		  	//std::cout << "Leido: " << leido << NEWLINE;
+			  alfabeto_.insert(leido);
+			}
 		}
 		entrada.close();
 	}

@@ -66,7 +66,7 @@ void ExpresionRegular::setPefija (std::string newPrefija) {
 }
 
 
-void ExpresionRegular::insertInfija (int i) {
+/*void ExpresionRegular::insertarInfija (int i) {
 	infija_.insert(i, CONCATENACION);
-}
+}*/
 
