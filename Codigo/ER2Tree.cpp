@@ -28,7 +28,7 @@ ER2Tree::ER2Tree (std::string& ficheroEntrada, std::string& ficheroSalida, std::
   alfabeto_(ficheroAlfabeto)
   {
 	  run (ficheroEntrada);
-	  //escrituraFichero (ficheroSalida);
+	  escrituraFichero (ficheroSalida);
   }
 
 
@@ -91,10 +91,14 @@ void ER2Tree::run (std::string& ficheroEntrada) {
 			auxInfija = introduceConcatenacion(expresionActual);
 			algoritmo1(expresionActual, auxInfija);      // Convertimos a postfija.
 		  algoritmo2(expresionActual); // Construimos el árbol a partir de la expresión postfija
+			expresionesRegulares_.push_back(expresionActual);
+
+			std::cout << "INFIJA: " << expresionActual.getInfija() << NEWLINE;	
+			std::cout << "POSTFIJA: " << expresionActual.getPostfija() << NEWLINE;
+			std::cout << "PREFIJA: " << expresionActual.getPrefija() << NEWLINE;
+
 			leido.clear();
 			auxInfija.clear();
-
-
 		}
 	}
 }
@@ -186,25 +190,80 @@ void ER2Tree::algoritmo1 (ExpresionRegular& expresionRegular, std::string& auxIn
 
 // Obtiene el árbol de una expresión regular en notación postfija.
 void ER2Tree::algoritmo2 (ExpresionRegular& expresion) {
-	std::stack<Nodo> pila // Pila que irá almacenando el árbol en cuestión.
+	std::stack<Nodo*> pila; // Pila que irá almacenando el árbol en cuestión.
 	bool condicion1;
 	bool condicion2;
 	bool condicion3;
 	bool condicion4;
+	bool condicion5;
+	bool condicion6;
 
-	// TODO:
-	// Crear árbol;
-	// Inicializar árbol;
-	// Meter el árbol en la pila.
 		
 		for (int i = 0; i < expresion.getPostfija().size(); ++i) {
 			condicion1 = expresion.getPostfija()[i] != OR;
 			condicion2 = expresion.getPostfija()[i] != STAR;
 			condicion3 = expresion.getPostfija()[i] != CONCATENA;
+			condicion4 = expresion.getPostfija()[i] == OR;
+			condicion5 = expresion.getPostfija()[i] == STAR;
+			condicion6 = expresion.getPostfija()[i] == CONCATENA;
 
 		if (condicion1 && condicion2 && condicion3) {
-			// Si es un operando, genera un nuevo nodo e introducirlo en el árbol.
+			char auxChar = expresion.getPostfija()[i];
+			Nodo* nuevoNodo = new Nodo(auxChar);
+			pila.push(nuevoNodo);
+			if (!pila.empty()) 
+				std::cout << "LA PILA NO ESTÁ VACÍA: " << NEWLINE;
+		}
+		else if ((condicion4 || condicion5 || condicion6) && !pila.empty()) {
+			Nodo* raiz = new Nodo(expresion.getPostfija()[i]);
+			raiz->setIzquierdo(pila.top());
+			pila.pop();
+			if ((condicion4 || condicion6) && !pila.empty()) {
+				std::cout << "Top: " << pila.top() << NEWLINE;
+				raiz->setDerecho(pila.top());
+				pila.pop();
+			}
+				pila.push(raiz);
 		}
 	}
+	
+		if (!pila.empty()) {
+		  expresion.imprimirPrefija(pila.top());
+		  std::cout << "Prefija: " << expresion.getPrefija() << NEWLINE;
+		}
 }
 
+
+// Escribe en el fichero de salida la tabla solicitiada en el enunciado de la
+// práctica.
+void ER2Tree::escrituraFichero (std::string& ficheroSalida) {
+	std::ofstream ofs;
+	ofs.open(ficheroSalida);
+
+	std::string espacio;
+	std::string espacionum;
+
+	ofs << "--------------------------------------------------------------------------" << NEWLINE;
+	ofs << "Infija" << "\t\t" << "Postfija" << "\t\t" << "Prefija" << "\t\t" << "Nodos" << NEWLINE;
+	ofs << "--------------------------------------------------------------------------" << NEWLINE;
+
+	for (int i = 0; i < expresionesRegulares_.size(); ++i) {
+		if (!expresionesRegulares_[i].getInfija().empty()) {
+			if (expresionesRegulares_[i].getInfija().size() < 5) {
+				espacio = "\t\t   ";
+				espacionum = "\t\t\t";
+			}
+			else {
+				espacio = "\t  ";
+				espacionum = "\t\t\t";
+			}
+		ofs << expresionesRegulares_[i].getInfija() << espacio;
+		ofs << expresionesRegulares_[i].getPostfija() << espacio;
+	  ofs	<< expresionesRegulares_[i].getPrefija() << espacionum;
+	  ofs << expresionesRegulares_[i].getPostfija().size() <<	NEWLINE;
+		}
+	}
+	ofs << "--------------------------------------------------------------------------" << NEWLINE;
+
+	ofs.close();
+}

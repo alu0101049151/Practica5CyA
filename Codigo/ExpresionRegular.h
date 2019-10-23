@@ -24,6 +24,8 @@
 
 #include <string>
 
+#include "Nodo.h"
+
 const char NEWLINE = '\n';
 const std::string CONCATENACION = "&";
 const char CONCATENA = '&';
@@ -45,7 +47,7 @@ class ExpresionRegular {
 		void setInfija (std::string newInfija);
 		void setPostfija (std::string newPostfija);
 		void setPefija (std::string newPrefija);
-	//	void insertarInfija (int i);
+	  void imprimirPrefija(Nodo* raiz);
 
 	protected:
 

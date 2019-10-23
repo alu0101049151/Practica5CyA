@@ -66,7 +66,12 @@ void ExpresionRegular::setPefija (std::string newPrefija) {
 }
 
 
-/*void ExpresionRegular::insertarInfija (int i) {
-	infija_.insert(i, CONCATENACION);
-}*/
+void ExpresionRegular::imprimirPrefija(Nodo* raiz) {
+	if (raiz == NULL)
+		return;
 
+	prefija_.push_back(raiz->getDato());
+
+	imprimirPrefija(raiz->getIzquierdo());
+	imprimirPrefija(raiz->getDerecho());
+}

@@ -8,8 +8,9 @@
  * Autor: Basilio Gómez Navarro
  * Correo: alu0101049151@ull.edu.es
  * Fecha 20/10/2019
- * Archivo Nodo.h: Clase Nodo. Clase que representa el nodo de un arbol binario.
- *                       Este fichero contiene la definición de la clase.
+ * Archivo Arbol.h: Clase Arbol. Esta clase lee de un fichero de entrada
+ *                  Representa un árbol binario.
+ *                  Este fichero contiene la definición de la clase.
  *
  * Referencias:
  *                   Enunciado de la prácita:
@@ -18,29 +19,23 @@
  *                   20/10/2019 - Creación (primera versión) del código
  * */
 
-#ifndef PRACTICA5_NODO_H
-#define PRACTICA5_NODO_H
+#ifndef PRACTICA5_ARBOL_H
+#define PRACTICA5_ARBOL_H
 
-#include <cstddef>
+#include "Nodo.h"
 
-class Nodo {
+class Arbol {
 	public:
+		Arbol(Nodo* raiz);
 
-		Nodo (char dato);
-		Nodo ();
-		~Nodo ();
 
-		char getDato ();
-		Nodo* getIzquierdo (); 
-		Nodo* getDerecho ();
-		
-		void setIzquierdo(Nodo* auxNodo);
-		void setDerecho(Nodo* auxNodo);		
-
+	
 	private:
-		char dato_;           // Es la información que contiene el nodo en su interior.
-		Nodo *izquierdo_;     // Es el hijo izquierdo del nodo.
-		Nodo *derecho_;       // Es el hijo derecho del nodo.
+		Nodo* raiz_;   // Es la raíz del árbol.
+		int contador;  // Cuenta el número de nodos que hay en el árbol.
+		
+
 };
 
-#endif //PRACTICA5_NODO_H
+
+#endif //PRACTICA5_ARBOL_H
